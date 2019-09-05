@@ -1,37 +1,43 @@
-import React, { Component } from 'react'
-import axios from 'axios'
-import Dictionary from '../../components/Dictionary'
-// import searchWord from '../dictionaryAPI'
+import React, { Component } from "react"
+import axios from "axios"
+import Dictionary from "../../components/Dictionary"
 
 class DictionaryContainer extends Component {
-  constructor () {
+  constructor() {
     super()
 
     this.state = {
-        wordresponse: [],
-        wordsearch: ''
+      wordresponse: [],
+      laungage: "en",
+      wordsearch: ""
     }
   }
 
-    searchWord = () => {
-        const url = 'https://dictionaryapi.herokuapp.com/?define=' + this.state.wordsearch
-                    axios.get(url).then(response => response.data)
-                    .then((data) => {
-                      this.setState({ wordresponse: data })
-                     })
-    }
+  searchWord = () => {
+    const url =
+      "https://dictionaryapi.herokuapp.com/?define=" +
+      this.state.wordsearch +
+      "&lang=" +
+      this.state.laungage
 
-    componentDidMount() {
+    axios
+      .get(url)
+      .then(response => response.data)
+      .then(data => {
+        this.setState({ wordresponse: data })
+      })
+  }
 
-    }
+  componentDidMount() {}
 
-  render () {
-
+  render() {
     return (
       <React.Fragment>
-        <Dictionary onClick={this.searchWord}
-        onChange={newSearch => this.setState({ wordsearch: newSearch })}
-        searchquery={this.state.wordresponse}/>
+        <Dictionary
+          onClick={this.searchWord}
+          onChange={newSearch => this.setState({ wordsearch: newSearch })}
+          onSearch={this.state.wordresponse}
+        />
       </React.Fragment>
     )
   }
