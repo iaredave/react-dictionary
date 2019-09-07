@@ -9,7 +9,7 @@ class DictionaryContainer extends Component {
     this.state = {
       wordresponse: [],
       laungage: "en",
-      wordsearch: ""
+      wordsearch: "right"
     }
   }
 
@@ -28,7 +28,20 @@ class DictionaryContainer extends Component {
       })
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    const url =
+      "https://dictionaryapi.herokuapp.com/?define=" +
+      this.state.wordsearch +
+      "&lang=" +
+      this.state.laungage
+
+    axios
+      .get(url)
+      .then(response => response.data)
+      .then(data => {
+        this.setState({ wordresponse: data })
+      })
+  }
 
   render() {
     return (
